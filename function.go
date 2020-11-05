@@ -13,7 +13,16 @@ var s *saluter.Saluter
 
 func init() {
 	var err error
-	s, err = saluter.NewFileSaluter(os.Getenv("FILENAME"))
+
+	// get the filename from the FILENAME environment variable
+	// defaulting to goodmorning.csv
+	filename := "goodmorning.csv"
+	if env := os.Getenv("FILENAME"); env != "" {
+		filename = env
+	}
+
+	// create the Saluter
+	s, err = saluter.NewFileSaluter(filename)
 	if err != nil {
 		log.Fatalln(err)
 	}
